@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 400px;
+                 background-color: #FFFFFF;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "font": {"color": "black"}, "id": "@DiegoArcos14", "label": "@DiegoArcos14", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "nan", "label": "nan", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@alfredjoe80", "label": "@alfredjoe80", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@The_JuanG", "label": "@The_JuanG", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@LuisHannaNader", "label": "@LuisHannaNader", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@hugotrajes", "label": "@hugotrajes", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@MarinaPau23", "label": "@MarinaPau23", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@LuisDGO78", "label": "@LuisDGO78", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@PatSnapEureka", "label": "@PatSnapEureka", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@cxaviergr", "label": "@cxaviergr", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@milenialmentor", "label": "@milenialmentor", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@Findjobit", "label": "@Findjobit", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@kavm75", "label": "@kavm75", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@MarcelFeraud", "label": "@MarcelFeraud", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@rorrantia", "label": "@rorrantia", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@carriondaniel", "label": "@carriondaniel", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@DLaroquet", "label": "@DLaroquet", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@normanjr72", "label": "@normanjr72", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@LocalizaEcuador", "label": "@LocalizaEcuador", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@DanielNivelo2", "label": "@DanielNivelo2", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@JbJuliobenites", "label": "@JbJuliobenites", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@veronicanlu", "label": "@veronicanlu", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@MickyMunozJ", "label": "@MickyMunozJ", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@Gabipallares", "label": "@Gabipallares", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@tntevalle", "label": "@tntevalle", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@facosta1969", "label": "@facosta1969", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@IIMAGustavo", "label": "@IIMAGustavo", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@wcbleaders", "label": "@wcbleaders", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@LV1974191606", "label": "@LV1974191606", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@carlos_and56483", "label": "@carlos_and56483", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@minorl24", "label": "@minorl24", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@psgyq", "label": "@psgyq", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@LCalderon22576", "label": "@LCalderon22576", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@PBeyota", "label": "@PBeyota", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@viajero3011", "label": "@viajero3011", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@carlvasq", "label": "@carlvasq", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@TheFP", "label": "@TheFP", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@peperina79", "label": "@peperina79", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@JC_UgarteNiemes", "label": "@JC_UgarteNiemes", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@kaingye74", "label": "@kaingye74", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@jorgeluisalva13", "label": "@jorgeluisalva13", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@Frankli15137677", "label": "@Frankli15137677", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@AntonioS71", "label": "@AntonioS71", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@esinedselasor", "label": "@esinedselasor", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@Lagertha_49", "label": "@Lagertha_49", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@luchefe", "label": "@luchefe", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@GranizoEnr87571", "label": "@GranizoEnr87571", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@papachucho", "label": "@papachucho", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@SPanel_Platform", "label": "@SPanel_Platform", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@JohnnyJonupa2", "label": "@JohnnyJonupa2", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@Geova257", "label": "@Geova257", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@gabobarbae", "label": "@gabobarbae", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@LuisCeballos91", "label": "@LuisCeballos91", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@CarminCaceresA", "label": "@CarminCaceresA", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@OswaldoGon88771", "label": "@OswaldoGon88771", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@Billyvsec", "label": "@Billyvsec", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@AlbertoLNegronA", "label": "@AlbertoLNegronA", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@Pateomasones", "label": "@Pateomasones", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@Ricardo_Flowers", "label": "@Ricardo_Flowers", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@xcvalentino", "label": "@xcvalentino", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@Junior01001", "label": "@Junior01001", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@johnx22", "label": "@johnx22", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@manaba_guayaco", "label": "@manaba_guayaco", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@LaEsposaDeBrad", "label": "@LaEsposaDeBrad", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@vier", "label": "@vier", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@xavicoenrique", "label": "@xavicoenrique", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@yoyovaldez1", "label": "@yoyovaldez1", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@versgyenorte7", "label": "@versgyenorte7", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "@travelfan7501", "label": "@travelfan7501", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"from": "@DiegoArcos14", "to": "nan", "width": 1}, {"from": "@DiegoArcos14", "to": "@alfredjoe80", "width": 1}, {"from": "@DiegoArcos14", "to": "@The_JuanG", "width": 1}, {"from": "@DiegoArcos14", "to": "@LuisHannaNader", "width": 1}, {"from": "@DiegoArcos14", "to": "@hugotrajes", "width": 1}, {"from": "@DiegoArcos14", "to": "@MarinaPau23", "width": 1}, {"from": "@DiegoArcos14", "to": "@LuisDGO78", "width": 1}, {"from": "@alfredjoe80", "to": "@The_JuanG", "width": 1}, {"from": "@alfredjoe80", "to": "@PatSnapEureka", "width": 1}, {"from": "@alfredjoe80", "to": "@LuisHannaNader", "width": 1}, {"from": "@LuisHannaNader", "to": "@hugotrajes", "width": 1}, {"from": "@MarinaPau23", "to": "@cxaviergr", "width": 1}, {"from": "@MarinaPau23", "to": "@milenialmentor", "width": 1}, {"from": "@LuisDGO78", "to": "@cxaviergr", "width": 1}, {"from": "@cxaviergr", "to": "@Findjobit", "width": 1}, {"from": "@milenialmentor", "to": "@kavm75", "width": 1}, {"from": "@kavm75", "to": "@MarcelFeraud", "width": 1}, {"from": "@MarcelFeraud", "to": "@rorrantia", "width": 1}, {"from": "@rorrantia", "to": "@carriondaniel", "width": 1}, {"from": "@carriondaniel", "to": "@DLaroquet", "width": 1}, {"from": "@DLaroquet", "to": "@normanjr72", "width": 1}, {"from": "@normanjr72", "to": "@LocalizaEcuador", "width": 1}, {"from": "@normanjr72", "to": "@DanielNivelo2", "width": 1}, {"from": "@DanielNivelo2", "to": "@JbJuliobenites", "width": 1}, {"from": "@JbJuliobenites", "to": "@veronicanlu", "width": 1}, {"from": "@veronicanlu", "to": "@MickyMunozJ", "width": 1}, {"from": "@MickyMunozJ", "to": "@Gabipallares", "width": 1}, {"from": "@Gabipallares", "to": "@tntevalle", "width": 1}, {"from": "@tntevalle", "to": "@facosta1969", "width": 1}, {"from": "@facosta1969", "to": "@IIMAGustavo", "width": 1}, {"from": "@IIMAGustavo", "to": "@wcbleaders", "width": 1}, {"from": "@IIMAGustavo", "to": "@LV1974191606", "width": 1}, {"from": "@LV1974191606", "to": "@carlos_and56483", "width": 1}, {"from": "@carlos_and56483", "to": "@minorl24", "width": 1}, {"from": "@minorl24", "to": "@psgyq", "width": 1}, {"from": "@psgyq", "to": "@LCalderon22576", "width": 1}, {"from": "@LCalderon22576", "to": "@PBeyota", "width": 1}, {"from": "@PBeyota", "to": "@viajero3011", "width": 1}, {"from": "@viajero3011", "to": "@carlvasq", "width": 1}, {"from": "@carlvasq", "to": "@TheFP", "width": 1}, {"from": "@carlvasq", "to": "@peperina79", "width": 1}, {"from": "@peperina79", "to": "@JC_UgarteNiemes", "width": 1}, {"from": "@JC_UgarteNiemes", "to": "@kaingye74", "width": 1}, {"from": "@kaingye74", "to": "@jorgeluisalva13", "width": 1}, {"from": "@jorgeluisalva13", "to": "@Frankli15137677", "width": 1}, {"from": "@Frankli15137677", "to": "@AntonioS71", "width": 1}, {"from": "@AntonioS71", "to": "@esinedselasor", "width": 1}, {"from": "@esinedselasor", "to": "@Lagertha_49", "width": 1}, {"from": "@Lagertha_49", "to": "@luchefe", "width": 1}, {"from": "@luchefe", "to": "@GranizoEnr87571", "width": 1}, {"from": "@GranizoEnr87571", "to": "@papachucho", "width": 1}, {"from": "@papachucho", "to": "@SPanel_Platform", "width": 1}, {"from": "@papachucho", "to": "@JohnnyJonupa2", "width": 1}, {"from": "@JohnnyJonupa2", "to": "@Geova257", "width": 1}, {"from": "@Geova257", "to": "@gabobarbae", "width": 1}, {"from": "@gabobarbae", "to": "@LuisCeballos91", "width": 1}, {"from": "@LuisCeballos91", "to": "@CarminCaceresA", "width": 1}, {"from": "@CarminCaceresA", "to": "@OswaldoGon88771", "width": 1}, {"from": "@OswaldoGon88771", "to": "@Billyvsec", "width": 1}, {"from": "@Billyvsec", "to": "@AlbertoLNegronA", "width": 1}, {"from": "@AlbertoLNegronA", "to": "@Pateomasones", "width": 1}, {"from": "@Pateomasones", "to": "@Ricardo_Flowers", "width": 1}, {"from": "@Ricardo_Flowers", "to": "@xcvalentino", "width": 1}, {"from": "@xcvalentino", "to": "@Junior01001", "width": 1}, {"from": "@Junior01001", "to": "@johnx22", "width": 1}, {"from": "@johnx22", "to": "@manaba_guayaco", "width": 1}, {"from": "@manaba_guayaco", "to": "@LaEsposaDeBrad", "width": 1}, {"from": "@LaEsposaDeBrad", "to": "@vier", "width": 1}, {"from": "@vier", "to": "@xavicoenrique", "width": 1}, {"from": "@xavicoenrique", "to": "@yoyovaldez1", "width": 1}, {"from": "@yoyovaldez1", "to": "@versgyenorte7", "width": 1}, {"from": "@versgyenorte7", "to": "@travelfan7501", "width": 1}, {"from": "@travelfan7501", "to": "@travelfan7501", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
