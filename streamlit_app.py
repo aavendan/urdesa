@@ -68,7 +68,7 @@ def return_pyvis_graph(df):
 
 def datos_venta():
 
-    df = pd.read_excel("../data/casas_urdesa_final_expanded.xlsx")
+    df = pd.read_excel("./data/casas_urdesa_final_expanded.xlsx")
     
     total_rows = len(df)
     media_precio = df["precio"].mean()
